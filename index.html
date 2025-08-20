@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste DISC - BricoBread</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+<body>
+
+    <div id="home-page" class="page active">
+        <img src="logo-2x.png" alt="Logo da BricoBread" class="logo">
+        <h1>Teste DISC - BricoBread</h1>
+        <form id="info-form">
+            <label for="full-name">Nome Completo:</label>
+            <input type="text" id="full-name" required>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" required>
+            <button type="submit">Iniciar Teste</button>
+        </form>
+    </div>
+
+    <div id="quiz-page" class="page">
+        <h2>Perguntas</h2>
+        <form id="quiz-form">
+            <div id="questions-container"></div>
+            <button type="submit">Finalizar Teste</button>
+        </form>
+    </div>
+
+    <div id="results-page" class="page">
+        <h2 id="participant-name"></h2>
+        <div class="chart-container">
+            <canvas id="disc-chart"></canvas>
+        </div>
+        <div id="profile-text"></div>
+        <button id="restart-button">Fazer Novo Teste</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
