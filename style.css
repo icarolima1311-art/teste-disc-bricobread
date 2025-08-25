@@ -1,6 +1,7 @@
+/* ====== Base do site / páginas do teste ====== */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #e91717; /* Fundo preto */
+    background-color: #e91717; /* Fundo vermelho BricoBread */
     color: #ffffff; /* Texto em branco */
     margin: 0;
     padding: 20px;
@@ -12,10 +13,10 @@ body {
 }
 
 .page {
-    background: #1a1a1a; /* Fundo do container em cinza escuro para contraste */
+    background: #1a1a1a; /* container escuro */
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.15); /* Sombra mais clara */
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.15);
     width: 100%;
     max-width: 700px;
     display: none;
@@ -24,43 +25,30 @@ body {
     text-align: center;
 }
 
-.page.active {
-    display: flex;
-}
+.page.active { display: flex; }
 
-h1, h2 {
-    color: #ffffff; /* Títulos em branco */
-    margin-bottom: 20px;
-}
+h1, h2 { color: #ffffff; margin-bottom: 20px; }
 
-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+form { width: 100%; display: flex; flex-direction: column; gap: 20px; }
 
 label {
     align-self: flex-start;
     font-weight: bold;
-    color: #cccccc; /* Labels em cinza claro */
+    color: #cccccc;
     margin-bottom: 5px;
 }
 
-/* Estilo para campos de texto e email */
 input[type="text"], input[type="email"] {
-    background-color: #333; /* Fundo dos inputs em cinza escuro */
-    color: #ffffff; /* Texto dos inputs em branco */
-    border: 1px solid #555; /* Borda dos inputs em cinza */
+    background-color: #333;
+    color: #ffffff;
+    border: 1px solid #555;
     padding: 12px 15px;
     border-radius: 6px;
     box-sizing: border-box;
     font-size: 16px;
 }
 
-input::placeholder {
-    color: #888;
-}
+input::placeholder { color: #888; }
 
 input:focus {
     border-color: #a30000;
@@ -69,10 +57,7 @@ input:focus {
 }
 
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
 button {
     background-color: #a30000;
@@ -85,132 +70,83 @@ button {
     padding: 12px 15px;
     border-radius: 6px;
 }
+button:hover { background-color: #8c0000; }
 
-button:hover {
-    background-color: #8c0000;
-}
-
-/* Estilo para a página do teste */
 #questions-container {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    text-align: left;
-    margin-top: 20px;
+    display: flex; flex-direction: column; gap: 30px;
+    text-align: left; margin-top: 20px;
 }
 
-.question {
-    border-bottom: 1px solid #444; /* Linha de separação mais clara */
-    padding-bottom: 20px;
-}
-
-.question:last-child {
-    border-bottom: none;
-}
+.question { border-bottom: 1px solid #444; padding-bottom: 20px; }
+.question:last-child { border-bottom: none; }
 
 .question p {
-    font-weight: bold;
-    margin-bottom: 15px;
-    font-size: 18px;
-    color: #ffffff; /* Texto da pergunta em branco */
+    font-weight: bold; margin-bottom: 15px; font-size: 18px; color: #ffffff;
 }
 
-.options label {
-    display: block;
-    margin: 10px 0;
-    cursor: pointer;
-    font-weight: normal;
-    font-size: 16px;
-    color: #e0e0e0; /* Texto das opções em cinza claro */
-}
+.options label { display: block; margin: 10px 0; cursor: pointer; font-weight: normal; font-size: 16px; color: #e0e0e0; }
+.options label:hover { background-color: #222; border-radius: 4px; padding: 5px; }
 
-.options label:hover {
-    background-color: #222; /* Destaque ao passar o mouse em cinza escuro */
-    border-radius: 4px;
-    padding: 5px;
-}
-
-/* CORREÇÃO AQUI: Estilo específico para botões de rádio */
 .options input[type="radio"] {
-    -webkit-appearance: radio;
-    -moz-appearance: radio;
-    appearance: radio;
-    margin-right: 10px;
+    -webkit-appearance: radio; -moz-appearance: radio; appearance: radio; margin-right: 10px;
 }
 
-/* Estilo para a página de resultados */
-.chart-container {
-    width: 100%;
-    max-width: 550px;
-    margin: 30px auto;
-    border-radius: 8px;
-    overflow: hidden;
-}
+.chart-container { width: 100%; max-width: 550px; margin: 30px auto; border-radius: 8px; overflow: hidden; }
 
 #profile-text {
-    margin-top: 30px;
-    text-align: justify;
-    line-height: 1.7;
-    font-size: 16px;
-    color: #e0e0e0; /* Texto explicativo em cinza claro */
+    margin-top: 30px; text-align: justify; line-height: 1.7; font-size: 16px; color: #e0e0e0;
 }
 
-#restart-button {
-    margin-top: 30px;
-    background-color: #555; /* Botão de reiniciar em cinza */
-    color: #fff;
-}
+#restart-button { margin-top: 30px; background-color: #555; color: #fff; }
+#restart-button:hover { background-color: #777; }
 
-#restart-button:hover {
-    background-color: #777;
-}
-
-/* Responsividade */
+/* ===== Responsividade do teste ===== */
 @media (max-width: 768px) {
-    body {
-        padding: 15px;
-    }
-    .page {
-        padding: 30px;
-        border-radius: 10px;
-    }
-    h1 {
-        font-size: 2em;
-        margin-bottom: 15px;
-    }
-    h2 {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-    }
-    form {
-        gap: 15px;
-    }
-    input, button {
-        padding: 10px 12px;
-        font-size: 16px;
-    }
-    #questions-container {
-        gap: 20px;
-        margin-top: 15px;
-    }
-    .question p {
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-    .options label {
-        font-size: 1em;
-        margin: 8px 0;
-    }
-    .chart-container {
-        margin: 20px auto;
-    }
-    #profile-text {
-        font-size: 1em;
-        line-height: 1.6;
-        margin-top: 20px;
-    }
-    #restart-button {
-        margin-top: 20px;
-        font-size: 16px;
-    }
+    body { padding: 15px; }
+    .page { padding: 30px; border-radius: 10px; }
+    h1 { font-size: 2em; margin-bottom: 15px; }
+    h2 { font-size: 1.5em; margin-bottom: 15px; }
+    form { gap: 15px; }
+    input, button { padding: 10px 12px; font-size: 16px; }
+    #questions-container { gap: 20px; margin-top: 15px; }
+    .question p { font-size: 1.2em; margin-bottom: 10px; }
+    .options label { font-size: 1em; margin: 8px 0; }
+    .chart-container { margin: 20px auto; }
+    #profile-text { font-size: 1em; line-height: 1.6; margin-top: 20px; }
+    #restart-button { margin-top: 20px; font-size: 16px; }
 }
+
+/* ===== Modal do RH (Resultados DISC) ===== */
+.modal.hidden { display: none; }
+.modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.6);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+.modal-content {
+  background: #1f1f1f; color: #f0f0f0;
+  padding: 24px; border-radius: 12px;
+  width: min(720px, 92vw);
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+.modal-close { float: right; cursor: pointer; font-size: 28px; line-height: 1; }
+.profile-text { margin-top: 16px; line-height: 1.6; font-size: 0.95rem; }
+
+/* Botão do painel (tabela do RH) */
+.btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 0;
+  background: #e31b23;
+  color: #fff;
+  cursor: pointer;
+  font-size: .9rem;
+}
+.btn:hover { filter: brightness(1.08); }
+
+/* Tabela do RH (caso use fora do inline do HTML) */
+#results-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+#results-table th, #results-table td { padding: 12px; border: 1px solid #555; word-wrap: break-word; }
+#results-table th { background-color: #a30000; color: #fff; }
+#results-table tr:nth-child(even) { background-color: #222; }
