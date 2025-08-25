@@ -1,4 +1,4 @@
-// AQUI ESTÁ SEU CÓDIGO COPIADO
+// Configuração do Firebase do TESTE (participante)
 const firebaseConfig = {
     apiKey: "AIzaSyCyH4CIG08T4bPDmYd5N-5Q1FSyTCMX_6I",
     authDomain: "teste-disc-bricobread.firebaseapp.com",
@@ -8,14 +8,13 @@ const firebaseConfig = {
     appId: "1:827161354543:web:d92fc84518f507e5f601da"
 };
 
-
-
-// Inicialize o Firebase e o Firestore
-firebase.initializeApp(firebaseConfig);
+// Inicialize o Firebase e o Firestore (evita reinit)
+if (!firebase.apps?.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 const db = firebase.firestore();
 
-// O RESTO DO SEU CÓDIGO ABAIXO...
-
+// Elementos de UI
 const homePage = document.getElementById('home-page');
 const quizPage = document.getElementById('quiz-page');
 const resultsPage = document.getElementById('results-page');
@@ -29,6 +28,7 @@ const restartButton = document.getElementById('restart-button');
 let userFullName = '';
 let discChartInstance = null;
 
+// Banco de perguntas (completo)
 const discQuestions = [
     {
         question: "Eu sou uma pessoa...",
@@ -266,14 +266,14 @@ const discQuestions = [
     }
 ];
 
-// Função para renderizar as perguntas
+// Renderiza as perguntas
 function renderQuestions() {
     questionsContainer.innerHTML = '';
     discQuestions.forEach((q, index) => {
         const questionDiv = document.createElement('div');
         questionDiv.className = 'question';
         questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
-        
+
         const optionsDiv = document.createElement('div');
         optionsDiv.className = 'options';
         q.options.forEach((opt, optIndex) => {
@@ -285,20 +285,23 @@ function renderQuestions() {
                 </label>
             `;
         });
+
         questionDiv.appendChild(optionsDiv);
         questionsContainer.appendChild(questionDiv);
     });
 }
 
-// Lógica de navegação e formulários
+// Navegação: início do teste
 infoForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    userFullName = document.getElementById('full-name').value;
+    userFullName = document.getElementById('full-name').value.trim();
+    if (!userFullName) return;
     homePage.classList.remove('active');
     quizPage.classList.add('active');
     renderQuestions();
 });
 
+// Finalizar teste
 quizForm.addEventListener('submit', (e) => {
     e.preventDefault();
     calculateResults();
@@ -306,46 +309,38 @@ quizForm.addEventListener('submit', (e) => {
     resultsPage.classList.add('active');
 });
 
+// Recomeçar
 restartButton.addEventListener('click', () => {
     resultsPage.classList.remove('active');
     homePage.classList.add('active');
-    // Limpar campos
     document.getElementById('full-name').value = '';
     document.getElementById('email').value = '';
     quizForm.reset();
     if (discChartInstance) {
         discChartInstance.destroy();
+        discChartInstance = null;
     }
+    profileTextEl.textContent = '';
+    participantNameEl.textContent = '';
 });
 
-// Lógica de cálculo e exibição de resultados
+// Calcula e exibe
 function calculateResults() {
     const formData = new FormData(quizForm);
-    const answers = {};
-    for (const [key, value] of formData.entries()) {
-        answers[key] = value;
-    }
-
     const profiles = { 'D': 0, 'I': 0, 'S': 0, 'C': 0 };
-    const totalQuestions = discQuestions.length;
 
-    for (const key in answers) {
-        const profile = answers[key];
-        if (profiles.hasOwnProperty(profile)) {
-            profiles[profile]++;
-        }
+    for (const [, value] of formData.entries()) {
+        if (profiles.hasOwnProperty(value)) profiles[value]++;
     }
 
     displayResults(profiles);
-    
-    // NOVO: Chamada para a função que salva os dados no Firebase
     saveResultsToFirebase(profiles);
 }
 
-// NOVO: Função para salvar os resultados no Firebase
+// Salva no Firestore
 function saveResultsToFirebase(profiles) {
-    const email = document.getElementById('email').value;
-    const name = document.getElementById('full-name').value;
+    const email = document.getElementById('email').value.trim();
+    const name = document.getElementById('full-name').value.trim();
     const timestamp = new Date().toISOString();
 
     db.collection("resultadosDISC").add({
@@ -365,7 +360,7 @@ function saveResultsToFirebase(profiles) {
     });
 }
 
-
+// Exibe o gráfico + texto
 function displayResults(profiles) {
     participantNameEl.textContent = `Resultado do Teste DISC - BricoBread de ${userFullName}`;
 
@@ -374,43 +369,30 @@ function displayResults(profiles) {
     const backgroundColors = ['#a30000', '#2980b9', '#2ecc71', '#555'];
 
     const ctx = document.getElementById('disc-chart').getContext('2d');
-    
-    if (discChartInstance) {
-        discChartInstance.destroy();
-    }
-    
+
+    if (discChartInstance) discChartInstance.destroy();
+
     discChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: labels,
+            labels,
             datasets: [{
                 label: 'Número de Respostas',
-                data: data,
+                data,
                 backgroundColor: backgroundColors,
-                borderColor: backgroundColors.map(color => color.replace(')', ', 0.5)')),
+                borderColor: backgroundColors,
                 borderWidth: 1
             }]
         },
         options: {
             responsive: true,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 26,
-                    title: {
-                        display: true,
-                        text: 'Número de Respostas'
-                    }
-                }
+                y: { beginAtZero: true, max: 26, title: { display: true, text: 'Número de Respostas' } }
             },
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
+            plugins: { legend: { display: false } }
         }
     });
-    
+
     const predominantProfile = Object.keys(profiles).reduce((a, b) => profiles[a] > profiles[b] ? a : b);
     let profileDescription = '';
     switch (predominantProfile) {
