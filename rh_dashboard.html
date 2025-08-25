@@ -5,54 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do RH - BricoBread</title>
     <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Chart.js para o gráfico no modal -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
-        body {
-            background-color: #1a1a1a;
-            color: #f0f0f0;
-            padding: 20px;
-        }
+        /* Estilo básico do painel (mantém sua identidade visual) */
+        body { background-color: #1a1a1a; color: #f0f0f0; padding: 20px; }
         .container {
-            max-width: 900px;
-            margin: auto;
-            background-color: #333;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 900px; margin: auto; background-color: #333; padding: 30px;
+            border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column; align-items: center;
         }
-        h1 {
-            text-align: center;
-            color: #a30000;
-        }
-        #results-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            table-layout: fixed;
-        }
+        h1 { text-align: center; color: #a30000; }
+        #results-table { width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed; }
         #results-table th, #results-table td {
-            padding: 12px;
-            border: 1px solid #555;
-            text-align: left;
-            word-wrap: break-word;
+            padding: 12px; border: 1px solid #555; text-align: left; word-wrap: break-word;
         }
-        #results-table th {
-            background-color: #a30000;
-            color: white;
-        }
-        #results-table tr:nth-child(even) {
-            background-color: #222;
-        }
+        #results-table th { background-color: #a30000; color: white; }
+        #results-table tr:nth-child(even) { background-color: #222; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Painel de Resultados - BricoBread</h1>
         <p>Abaixo estão os resultados de todos os testes DISC realizados.</p>
+
         <table id="results-table">
             <thead>
                 <tr>
@@ -63,11 +44,23 @@
                     <th>Estabilidade</th>
                     <th>Conformidade</th>
                     <th>Data</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
-            <tbody id="results-tbody">
-                </tbody>
+            <tbody id="results-tbody"></tbody>
         </table>
+    </div>
+
+    <!-- Modal para ver o gráfico do resultado -->
+    <div id="resultado-modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="modal-close" class="modal-close">&times;</span>
+            <h2 id="modal-title">Resultado DISC</h2>
+            <div class="chart-container">
+                <canvas id="modal-chart"></canvas>
+            </div>
+            <div id="modal-profile" class="profile-text"></div>
+        </div>
     </div>
 
     <script src="rh_dashboard.js"></script>
